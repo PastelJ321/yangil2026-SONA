@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>김은서 | 클릭 챌린지</title>
+    <link rel="stylesheet" href="static/style.css">
+</head>
+<body>
+    <div class="full-page">
+        <div class="main-card">
+            <div class="content-panel" style="text-align: center;">
+                <a href="index.html" style="text-decoration:none; color:#888; font-weight:bold;">HOME으로 돌아가기</a>
+                <h2>TIME: <span id="timer" style="color:var(--primary);">20</span>s | SCORE: <span id="score">0</span></h2>
+
+                <div id="game-view">
+                    <img src="static/piplup.png" id="piplup-btn" style="width:150px; cursor:pointer;" alt="클릭 버튼">
+                    <br><br>
+                    <button id="start-btn" onclick="startGame()" class="btn btn-primary" style="width:200px;">게임 시작</button>
+                </div>
+
+                <div id="result-box" style="display:none; margin-top:20px;">
+                    <h3>게임 종료</h3>
+                    <p id="result-text" style="color:#666;"></p>
+                </div>
+            </div>
+            <div class="side-panel" style="flex:1;">
+                <h3>플레이 방법</h3>
+                <div class="leaderboard-container">
+                    <table>
+                        <tr><td>1</td><td>시작 버튼을 누릅니다.</td></tr>
+                        <tr><td>2</td><td>20초 동안 펭도리를 많이 클릭합니다.</td></tr>
+                        <tr><td>3</td><td>끝나면 점수가 바로 표시됩니다.</td></tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let score = 0;
+        let timeLeft = 20;
+        let gameActive = false;
+        let timerId = null;
+
+        function startGame() {
+            score = 0;
+            timeLeft = 20;
+            gameActive = true;
+            document.getElementById("score").innerText = "0";
+            document.getElementById("timer").innerText = "20";
+            document.getElementById("start-btn").style.display = "none";
+            document.getElementById("result-box").style.display = "none";
+
+            timerId = setInterval(() => {
+                timeLeft -= 1;
+                document.getElementById("timer").innerText = String(timeLeft);
+
+                if (timeLeft <= 0) {
+                    clearInterval(timerId);
+                    gameActive = false;
+                    document.getElementById("start-btn").style.display = "inline-block";
+                    document.getElementById("start-btn").innerText = "다시 시작";
+                    document.getElementById("result-box").style.display = "block";
+                    document.getElementById("result-text").innerText = `최종 점수는 ${score}점입니다.`;
+                }
+            }, 1000);
+        }
+
+        document.getElementById("piplup-btn").onclick = () => {
+            if (!gameActive) {
+                return;
+            }
+
+            score += 1;
+            document.getElementById("score").innerText = String(score);
+        };
+    </script>
+</body>
+</html>

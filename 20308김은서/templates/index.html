@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>김은서 | Profile</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="full-page">
+        <div class="main-card">
+            <div class="side-panel">
+                <img src="{{ url_for('static', filename='piplup.png') }}" class="profile-img-large">
+                <h1 style="margin-top:20px;">김은서</h1>
+                <p>20308 | INTP</p>
+            </div>
+            <div class="content-panel">
+                <h2 style="font-size: 2.5rem; margin-bottom: 10px;">Hello, World!</h2>
+                <p style="font-size: 1.2rem; color: #666; line-height: 1.8;">
+                    팽도리를 좋아하는 은서의 홈페이지입니다.<br>
+                    파이썬 VS Code를 활용해 나만의 웹과 게임을 만들고 있어요.<br>
+                    아래 버튼을 클릭해 제가 만든 미니 게임들을 즐겨보세요!
+                </p>
+                <div class="btn-group">
+                    <a href="/game" class="btn btn-primary">🎮 클릭 챌린지</a>
+                    <a href="/shiny-game" class="btn btn-shiny">✨ 이로치 잡기</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

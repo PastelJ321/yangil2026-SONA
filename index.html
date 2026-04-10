@@ -6,14 +6,15 @@
   <title>소나 | 동아리 홈페이지 모음</title>
   <style>
     :root {
-      --bg: #f5efe6;
+      --bg-top: #f8efe7;
+      --bg-bottom: #efe3d1;
       --panel: rgba(255, 250, 244, 0.84);
-      --text: #2d241f;
+      --text: #2f241f;
       --muted: #6b5b50;
       --accent: #c96f3b;
-      --accent-dark: #9f4d22;
-      --line: rgba(45, 36, 31, 0.12);
-      --shadow: 0 18px 40px rgba(74, 45, 25, 0.12);
+      --accent-strong: #8e431d;
+      --line: rgba(47, 36, 31, 0.12);
+      --shadow: 0 20px 40px rgba(86, 55, 31, 0.12);
     }
 
     * {
@@ -26,34 +27,39 @@
       font-family: "Segoe UI", "Apple SD Gothic Neo", sans-serif;
       color: var(--text);
       background:
-        radial-gradient(circle at top left, rgba(201, 111, 59, 0.18), transparent 32%),
-        radial-gradient(circle at top right, rgba(238, 190, 138, 0.35), transparent 25%),
-        linear-gradient(180deg, #f7f2ea 0%, #efe3d3 100%);
+        radial-gradient(circle at top left, rgba(201, 111, 59, 0.18), transparent 30%),
+        radial-gradient(circle at top right, rgba(240, 190, 141, 0.36), transparent 24%),
+        linear-gradient(180deg, var(--bg-top) 0%, var(--bg-bottom) 100%);
     }
 
     .wrap {
-      width: min(1100px, calc(100% - 32px));
+      width: min(1120px, calc(100% - 32px));
       margin: 0 auto;
       padding: 32px 0 64px;
     }
 
-    .hero {
-      padding: 48px 28px;
+    .hero,
+    .guide {
       border: 1px solid var(--line);
       border-radius: 28px;
       background: var(--panel);
       backdrop-filter: blur(10px);
       box-shadow: var(--shadow);
-      overflow: hidden;
+    }
+
+    .hero {
       position: relative;
+      overflow: hidden;
+      padding: 44px 28px;
     }
 
     .hero::after {
       content: "";
       position: absolute;
-      inset: auto -80px -80px auto;
-      width: 220px;
-      height: 220px;
+      right: -70px;
+      bottom: -80px;
+      width: 210px;
+      height: 210px;
       border-radius: 50%;
       background: rgba(201, 111, 59, 0.14);
     }
@@ -63,20 +69,20 @@
       padding: 8px 14px;
       border-radius: 999px;
       background: rgba(201, 111, 59, 0.12);
-      color: var(--accent-dark);
+      color: var(--accent-strong);
       font-size: 14px;
       font-weight: 700;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.05em;
     }
 
     h1 {
-      margin: 18px 0 14px;
+      margin: 18px 0 12px;
       font-size: clamp(36px, 7vw, 72px);
-      line-height: 0.98;
+      line-height: 1;
     }
 
     .hero p {
-      max-width: 700px;
+      max-width: 720px;
       margin: 0;
       color: var(--muted);
       font-size: 18px;
@@ -103,7 +109,7 @@
 
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 18px;
     }
 
@@ -112,7 +118,7 @@
       padding: 22px;
       border-radius: 22px;
       border: 1px solid var(--line);
-      background: rgba(255, 255, 255, 0.74);
+      background: rgba(255, 255, 255, 0.76);
       box-shadow: 0 14px 28px rgba(80, 53, 37, 0.08);
       text-decoration: none;
       color: inherit;
@@ -127,25 +133,34 @@
 
     .card strong {
       display: block;
-      font-size: 22px;
       margin-bottom: 8px;
+      font-size: 22px;
     }
 
     .card p {
       margin: 0 0 16px;
       color: var(--muted);
       line-height: 1.6;
+      min-height: 48px;
     }
 
-    .card .link {
-      color: var(--accent-dark);
+    .path {
+      display: inline-block;
+      margin-bottom: 8px;
+      color: var(--muted);
+      font-size: 13px;
+      word-break: break-all;
+    }
+
+    .link {
+      color: var(--accent-strong);
       font-weight: 700;
     }
 
     .empty {
       padding: 28px;
       border-radius: 22px;
-      border: 1px dashed rgba(45, 36, 31, 0.2);
+      border: 1px dashed rgba(47, 36, 31, 0.18);
       background: rgba(255, 255, 255, 0.56);
       color: var(--muted);
       line-height: 1.7;
@@ -153,10 +168,7 @@
 
     .guide {
       margin-top: 28px;
-      padding: 22px;
-      border-radius: 22px;
-      background: rgba(255, 247, 238, 0.88);
-      border: 1px solid rgba(201, 111, 59, 0.18);
+      padding: 24px;
     }
 
     .guide h3 {
@@ -164,10 +176,16 @@
       font-size: 20px;
     }
 
+    .guide p {
+      margin: 0 0 12px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
     .guide code {
       padding: 2px 6px;
       border-radius: 8px;
-      background: rgba(45, 36, 31, 0.08);
+      background: rgba(47, 36, 31, 0.08);
     }
 
     .guide ul {
@@ -186,7 +204,7 @@
 
     @media (max-width: 640px) {
       .wrap {
-        width: min(100% - 20px, 1100px);
+        width: min(100% - 20px, 1120px);
         padding-top: 20px;
       }
 
@@ -211,8 +229,8 @@
       <span class="badge">SONA CLUB</span>
       <h1>소나</h1>
       <p>
-        동아리원 각자의 개성이 담긴 홈페이지를 한 곳에서 볼 수 있는 메인 페이지입니다.
-        아래 카드에서 각자의 소개 페이지로 바로 이동할 수 있습니다.
+        동아리원 각자의 소개 페이지를 한곳에서 모아 보는 상위 사이트입니다.
+        GitHub Pages에 올리면 아래 카드에서 각 학생의 홈페이지로 바로 이동할 수 있습니다.
       </p>
     </section>
 
@@ -225,11 +243,16 @@
     </section>
 
     <section class="guide">
-      <h3>추가 방법</h3>
+      <h3>현재 구조에서 GitHub에 올리는 방법</h3>
+      <p>
+        메인 페이지는 저장소 맨 위의 <code>index.html</code>이고, 학생 홈페이지는 각자 폴더 안에 있습니다.
+        그래서 메인 페이지에서는 실제 폴더 경로 그대로 링크해야 합니다.
+      </p>
       <ul>
-        <li>학생별 HTML 파일을 저장소에 업로드합니다. 예: <code>mina.html</code>, <code>jiho.html</code></li>
-        <li><code>members.js</code> 파일에 이름, 설명, 링크를 한 줄씩 추가합니다.</li>
-        <li>GitHub Pages로 배포하면 메인 페이지에서 각 학생 사이트로 이동할 수 있습니다.</li>
+        <li>저장소 루트에 있는 <code>index.html</code>을 GitHub Pages의 시작 페이지로 사용합니다.</li>
+        <li>학생 페이지는 예를 들어 <code>10609박수현/index.html</code> 같은 실제 경로로 연결합니다.</li>
+        <li>새 학생 파일을 추가할 때는 <code>members.js</code>에 이름, 설명, 경로만 추가하면 됩니다.</li>
+        <li>GitHub Pages는 경로의 대소문자를 구분하므로 파일명과 확장자를 실제와 똑같이 써야 합니다.</li>
       </ul>
     </section>
 
@@ -248,15 +271,16 @@
       grid.innerHTML = `
         <div class="empty">
           아직 등록된 개인 홈페이지가 없습니다.<br>
-          <code>members.js</code>에 학생 정보를 추가하면 이곳에 자동으로 카드가 나타납니다.
+          <code>members.js</code>에 학생 정보와 파일 경로를 추가하면 자동으로 카드가 나타납니다.
         </div>
       `;
     } else {
       grid.innerHTML = members.map((member) => `
         <a class="card" href="${member.href}">
+          <span class="path">${member.href}</span>
           <strong>${member.name}</strong>
-          <p>${member.description}</p>
-          <span class="link">홈페이지 보러 가기 →</span>
+          <p>${member.description || "개인 홈페이지로 이동합니다."}</p>
+          <span class="link">홈페이지 열기 →</span>
         </a>
       `).join("");
     }

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>나의 자기소개</title>
+    <style>
+        /* 기본 스타일 설정 */
+        body {
+            font-family: 'Pretendard', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* 프로필 카드 컨테이너 */
+        .profile-card {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+        }
+
+        h1 {
+            color: #2d3436;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #636e72;
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+        }
+
+        /* 취미 섹션 스타일 */
+        .hobby-section {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            text-align: left;
+        }
+
+        .hobby-item {
+            padding: 15px;
+            border-radius: 12px;
+            background-color: #f1f3f5;
+            transition: transform 0.2s;
+        }
+
+        .hobby-item:hover {
+            transform: translateY(-5px);
+            background-color: #e9ecef;
+        }
+
+        .hobby-title {
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .hobby-desc {
+            font-size: 0.95rem;
+            color: #495057;
+        }
+
+        /* 이모지 강조 */
+        .emoji {
+            margin-right: 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="profile-card">
+        <h1>안녕하세요! 👋</h1>
+        <p class="subtitle">나만의 속도로 일상을 즐기는 사람입니다.</p>
+
+        <div class="hobby-section">
+            <div class="hobby-item">
+                <span class="hobby-title"><span class="emoji">🎧</span>음악 감상</span>
+                <span class="hobby-desc">좋아하는 노래를 들으며 분위기에 푹 빠지는 시간을 소중히 여깁니다.</span>
+            </div>
+
+            <div class="hobby-item">
+                <span class="hobby-title"><span class="emoji">📖</span>책과 함께하는 휴식</span>
+                <span class="hobby-desc">천천히 책장을 넘기며 마음의 여유를 찾는 것을 좋아합니다.</span>
+            </div>
+
+            <div class="hobby-item">
+                <span class="hobby-title"><span class="emoji">🎬</span>즐거운 콘텐츠 시청</span>
+                <span class="hobby-desc">재미있고 흥미로운 영상이나 콘텐츠를 보며 에너지를 충전하곤 합니다.</span>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

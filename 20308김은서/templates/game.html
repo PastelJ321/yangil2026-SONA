@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>팽도리 클릭 챌린지</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="full-page">
+        <div class="main-card">
+            <div class="content-panel" style="text-align: center;">
+                <a href="/" style="text-decoration:none; color:#aaa; font-weight:bold;">⬅ HOME</a>
+                <h2>TIME: <span id="timer" style="color:var(--primary);">60</span>s | SCORE: <span id="score">0</span></h2>
+                
+                <div id="game-view">
+                    <img src="{{ url_for('static', filename='piplup.png') }}" id="piplup-btn" style="width:150px; cursor:pointer;">
+                    <br><br>
+                    <button id="start-btn" onclick="startGame()" class="btn btn-primary" style="width:200px;">게임 시작</button>
+                </div>
+
+                <div id="save-form" style="display:none; margin-top:20px;">
+                    <h3>기록 저장</h3>
+                    <input type="text" id="nickname" placeholder="닉네임" style="padding:10px; width:120px; border-radius:10px; border:1px solid #ddd;">
+                    <input type="text" id="message" placeholder="한마디 남기기" style="padding:10px; width:200px; border-radius:10px; border:1px solid #ddd;">
+                    <button onclick="submitScore()" class="btn btn-primary" style="padding:10px 20px;">저장</button>
+                </div>
+            </div>
+            <div class="side-panel" style="flex:1;">
+                <h3>🏆 TOP 10</h3>
+                <div class="leaderboard-container">
+                    <table>
+                        {% for entry in leaderboard %}
+                        <tr style="color:white;">
+                            <td>{{entry.nickname}}</td>
+                            <td><b>{{entry.clicks}}</b></td>
+                            <td style="font-size:0.8rem; opacity:0.8;">{{entry.message}}</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let score = 0, timeLeft = 60, gameActive = false;
+        function startGame() {
+            score = 0; timeLeft = 60; gameActive = true;
+            document.getElementById('score').innerText = 0;
+            document.getElementById('start-btn').style.display = 'none';
+            document.getElementById('save-form').style.display = 'none';
+            
+            let timerId = setInterval(() => {
+                timeLeft--;
+                document.getElementById('timer').innerText = timeLeft;
+                if(timeLeft <= 0) {
+                    clearInterval(timerId); gameActive = false;
+                    document.getElementById('save-form').style.display = 'block';
+                    document.getElementById('start-btn').style.display = 'inline-block';
+                    document.getElementById('start-btn').innerText = '다시 시작';
+                }
+            }, 1000);
+        }
+        document.getElementById('piplup-btn').onclick = () => { if(gameActive) { score++; document.getElementById('score').innerText = score; } };
+        function submitScore() {
+            const data = { 
+                nickname: document.getElementById('nickname').value, 
+                clicks: score, 
+                message: document.getElementById('message').value 
+            };
+            fetch('/save', { 
+                method: 'POST', 
+                headers: {'Content-Type': 'application/json'}, 
+                body: JSON.stringify(data) 
+            }).then(() => location.reload());
+        }
+    </script>
+</body>
+</html>

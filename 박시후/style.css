@@ -1,0 +1,68 @@
+/* 전체 설정 */
+body {
+    font-family: 'Malgun Gothic', sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+    line-height: 1.8;
+}
+
+/* 헤더 디자인 */
+header {
+    background-color: #343a40;
+    color: white;
+    text-align: center;
+    padding: 50px 20px;
+}
+
+.profile-img {
+    font-size: 80px;
+    margin-bottom: 10px;
+}
+
+/* 컨텐츠 중앙 정렬 */
+.container {
+    max-width: 700px;
+    margin: 30px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+/* 섹션 스타일 */
+section {
+    margin-bottom: 30px;
+}
+
+h2 {
+    border-left: 5px solid #007bff;
+    padding-left: 10px;
+    color: #007bff;
+    margin-bottom: 15px;
+}
+
+/* 리스트 스타일 */
+.skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    list-style: none;
+    padding: 0;
+}
+
+.skills li {
+    background: #e9ecef;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+}
+
+/* 푸터 */
+footer {
+    text-align: center;
+    color: #888;
+    margin-top: 50px;
+    padding-bottom: 20px;
+    font-size: 10px;
+}

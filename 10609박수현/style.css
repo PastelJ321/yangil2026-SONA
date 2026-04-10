@@ -1,0 +1,172 @@
+/* 1. 기본 초기화 및 폰트 설정 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #000;
+    color: #ffffff;
+    /* 한국어 가독성을 위해 프리텐다드나 나눔고딕 같은 폰트를 앞에 배치하는 것이 좋습니다 */
+    font-family: 'Pretendard', 'Malgun Gothic', 'Courier New', Courier, monospace;
+    overflow-x: hidden;
+    line-height: 1.6;
+}
+
+.container {
+    width: 85%;
+    max-width: 1200px; /* 너무 넓은 화면에서 퍼지는 것을 방지 */
+    margin: auto;
+}
+
+/* 2. 배경 이미지 설정 (오류 방지 및 최적화) */
+.bg-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* ⚠️ 중요: 파일명에 괄호나 공백이 있다면 반드시 따옴표('')를 쓰고 정확히 입력해야 합니다. */
+    background-image: url('dlfjstlr (1).jpg'); 
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: -2;
+}
+
+/* 이미지 가독성을 위한 어두운 오버레이 */
+.overlay {
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6); 
+}
+
+/* 3. 배경에 흐르는 원주율 숫자 */
+.pi-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    color: rgba(255, 255, 255, 0.07);
+    font-size: 8vw; /* 크기를 살짝 조절하여 가독성 확보 */
+    line-height: 1;
+    word-wrap: break-word;
+    word-break: break-all; /* 숫자가 길어도 강제로 줄바꿈되도록 수정 */
+    z-index: -1;
+    pointer-events: none;
+    font-family: 'Times New Roman', serif;
+    overflow: hidden; /* 배경 숫자가 화면 밖으로 나가지 않게 차단 */
+}
+
+/* 4. 콘텐츠 레이아웃 */
+.content-wrapper {
+    position: relative;
+    z-index: 1;
+}
+
+/* 헤더 - float 대신 flex 사용 권장 (최신 브라우저 최적화) */
+header {
+    padding: 30px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header h1 {
+    color: #fff;
+    letter-spacing: 2px;
+}
+
+header nav ul {
+    list-style: none;
+    display: flex;
+}
+
+header nav ul li {
+    margin-left: 25px;
+}
+
+header a {
+    color: #ccc;
+    text-decoration: none;
+    transition: 0.3s;
+    font-size: 1rem;
+}
+
+header a:hover {
+    color: #fff;
+    text-shadow: 0 0 8px #fff;
+}
+
+/* 5. 메인 섹션 */
+.hero {
+    padding: 80px 0;
+    text-align: center;
+}
+
+.pi-symbol {
+    font-size: 7rem;
+    color: #fff;
+    margin-bottom: 10px;
+    text-shadow: 0 0 20px rgba(255,255,255,0.4);
+}
+
+.hero h2 {
+    font-size: 2.2rem;
+    margin-bottom: 20px;
+    letter-spacing: 3px;
+    color: #eee;
+}
+
+/* '집 가고 싶다' 문구 효과 */
+.tired-text {
+    font-size: clamp(2rem, 8vw, 4rem); /* 화면 크기에 따라 글자 크기가 자동 조절됨 */
+    color: #fff;
+    margin: 40px 0;
+    font-weight: bold;
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+    animation: sway 3s infinite ease-in-out;
+}
+
+@keyframes sway {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+
+/* 상세 소망 문구 스타일 추가 */
+.hero p {
+    font-size: 1.1rem;
+    color: #bbb;
+    max-width: 700px;
+    margin: 0 auto 30px;
+    line-height: 1.8;
+}
+
+/* 6. 버튼 및 푸터 */
+.btn {
+    padding: 18px 50px;
+    background: transparent;
+    color: #fff;
+    border: 2px solid #fff;
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: bold;
+    transition: 0.4s ease;
+    text-transform: uppercase;
+}
+
+.btn:hover {
+    background: #fff;
+    color: #000;
+    box-shadow: 0 0 25px #fff;
+    transform: scale(1.05); /* 마우스 올리면 살짝 커지는 효과 */
+}
+
+footer {
+    text-align: center;
+    padding: 80px 0 40px;
+    color: #666;
+    font-size: 0.9rem;
+}

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>이로치 팽도리 잡기</title>
+    <style>
+        body, html { margin: 0; overflow: hidden; height: 100%; background: #222; font-family: sans-serif; }
+        #game-bg { width: 100%; height: 100%; background: skyblue; position: relative; }
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); display: flex; justify-content: center; align-items: center; z-index: 1000; color: white; flex-direction: column; }
+        .piplup { position: absolute; width: 80px; cursor: pointer; user-select: none; }
+        #ui { position: fixed; top: 20px; left: 20px; z-index: 500; background: white; padding: 15px; border-radius: 20px; }
+        .btn { padding: 15px 30px; font-size: 1.5rem; background: #4facfe; border: none; border-radius: 15px; color: white; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div id="ui">
+        <h2 style="margin:0;">✨ SHINY: <span id="shiny-count">0</span></h2>
+        <p style="margin:5px 0 0 0;">TIME: <span id="timer">60</span>s</p>
+    </div>
+
+    <div id="overlay" class="overlay">
+        <h1 id="msg-title">이로치 팽도리 잡기</h1>
+        <p id="msg-desc">이로치(확률 5%)를 찾아 클릭하세요!</p>
+        <button id="action-btn" class="btn" onclick="startShinyGame()">게임 시작</button>
+        <a href="/" id="home-btn" style="margin-top:20px; color: white;">홈으로 돌아가기</a>
+    </div>
+
+    <div id="game-bg"></div>
+
+    <script>
+        let shinyCount = 0, timeLeft = 60, gameActive = false;
+        const shinyImg = "{{ url_for('static', filename='piplupIRC.png') }}";
+        const normalImg = "{{ url_for('static', filename='piplup.png') }}";
+
+        function createPiplup() {
+            if (!gameActive) return;
+            const isShiny = Math.random() < 0.05; // 확률 5%로 상향
+            const img = document.createElement('img');
+            img.src = isShiny ? shinyImg : normalImg;
+            img.className = 'piplup';
+            
+            let x = Math.random() * (window.innerWidth - 80), y = Math.random() * (window.innerHeight - 80);
+            let speedX = (Math.random() - 0.5) * (isShiny ? 20 : 7), speedY = (Math.random() - 0.5) * (isShiny ? 20 : 7);
+
+            img.style.left = x + 'px'; img.style.top = y + 'px';
+            document.getElementById('game-bg').appendChild(img);
+
+            img.onclick = () => { if (isShiny && gameActive) { shinyCount++; document.getElementById('shiny-count').innerText = shinyCount; img.remove(); } };
+
+            let move = setInterval(() => {
+                if(!gameActive) { clearInterval(move); return; }
+                x += speedX; y += speedY;
+                if (x <= 0 || x >= window.innerWidth - 80) speedX *= -1;
+                if (y <= 0 || y >= window.innerHeight - 80) speedY *= -1;
+                img.style.left = x + 'px'; img.style.top = y + 'px';
+            }, 20);
+
+            setTimeout(() => { clearInterval(move); img.remove(); }, isShiny ? 2000 : 3000);
+        }
+
+        function startShinyGame() {
+            document.getElementById('overlay').style.display = 'none';
+            shinyCount = 0; timeLeft = 60; gameActive = true;
+            document.getElementById('shiny-count').innerText = 0;
+            
+            // 초기 30마리 생성
+            for(let i=0; i<30; i++) createPiplup();
+            
+            // 0.5초마다 보충
+            let spawn = setInterval(() => { if(gameActive) createPiplup(); else clearInterval(spawn); }, 500);
+
+            let timer = setInterval(() => {
+                timeLeft--; document.getElementById('timer').innerText = timeLeft;
+                if (timeLeft <= 0) {
+                    gameActive = false; clearInterval(timer);
+                    endGame();
+                }
+            }, 1000);
+        }
+
+        function endGame() {
+            document.getElementById('overlay').style.display = 'flex';
+            document.getElementById('msg-title').innerText = "게임 종료!";
+            document.getElementById('msg-desc').innerText = "잡은 팽로치: " + shinyCount + "마리";
+            document.getElementById('action-btn').innerText = "다시 하기";
+            document.getElementById('game-bg').innerHTML = "";
+        }
+    </script>
+</body>
+</html>

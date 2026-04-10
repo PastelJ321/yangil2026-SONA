@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>김은서 | 샤이니 찾기</title>
+    <style>
+        body, html {
+            margin: 0;
+            overflow: hidden;
+            height: 100%;
+            background: #222;
+            font-family: "Segoe UI", "Apple SD Gothic Neo", sans-serif;
+        }
+
+        #game-bg {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, #8fd3ff 0%, #d9f4ff 100%);
+            position: relative;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            color: white;
+            flex-direction: column;
+            text-align: center;
+            padding: 24px;
+        }
+
+        .piplup {
+            position: absolute;
+            width: 80px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        #ui {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 500;
+            background: white;
+            padding: 15px;
+            border-radius: 20px;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            background: #4facfe;
+            border: none;
+            border-radius: 15px;
+            color: white;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="ui">
+        <h2 style="margin:0;">SHINY: <span id="shiny-count">0</span></h2>
+        <p style="margin:5px 0 0 0;">TIME: <span id="timer">20</span>s</p>
+    </div>
+
+    <div id="overlay" class="overlay">
+        <h1 id="msg-title">샤이니 펭도리 찾기</h1>
+        <p id="msg-desc">5% 확률로 등장하는 샤이니 펭도리를 찾아 클릭해 보세요.</p>
+        <button id="action-btn" class="btn" onclick="startShinyGame()">게임 시작</button>
+        <a href="index.html" id="home-btn" style="margin-top:20px; color: white;">홈으로 돌아가기</a>
+    </div>
+
+    <div id="game-bg"></div>
+
+    <script>
+        let shinyCount = 0;
+        let timeLeft = 20;
+        let gameActive = false;
+        const shinyImg = "static/piplupIRC.png";
+        const normalImg = "static/piplup.png";
+
+        function createPiplup() {
+            if (!gameActive) {
+                return;
+            }
+
+            const isShiny = Math.random() < 0.05;
+            const img = document.createElement("img");
+            img.src = isShiny ? shinyImg : normalImg;
+            img.className = "piplup";
+
+            let x = Math.random() * (window.innerWidth - 80);
+            let y = Math.random() * (window.innerHeight - 80);
+            let speedX = (Math.random() - 0.5) * (isShiny ? 20 : 7);
+            let speedY = (Math.random() - 0.5) * (isShiny ? 20 : 7);
+
+            img.style.left = `${x}px`;
+            img.style.top = `${y}px`;
+            document.getElementById("game-bg").appendChild(img);
+
+            img.onclick = () => {
+                if (isShiny && gameActive) {
+                    shinyCount += 1;
+                    document.getElementById("shiny-count").innerText = String(shinyCount);
+                    img.remove();
+                }
+            };
+
+            const move = setInterval(() => {
+                if (!gameActive) {
+                    clearInterval(move);
+                    return;
+                }
+
+                x += speedX;
+                y += speedY;
+
+                if (x <= 0 || x >= window.innerWidth - 80) {
+                    speedX *= -1;
+                }
+
+                if (y <= 0 || y >= window.innerHeight - 80) {
+                    speedY *= -1;
+                }
+
+                img.style.left = `${x}px`;
+                img.style.top = `${y}px`;
+            }, 20);
+
+            setTimeout(() => {
+                clearInterval(move);
+                img.remove();
+            }, isShiny ? 2000 : 3000);
+        }
+
+        function startShinyGame() {
+            document.getElementById("overlay").style.display = "none";
+            shinyCount = 0;
+            timeLeft = 20;
+            gameActive = true;
+            document.getElementById("shiny-count").innerText = "0";
+            document.getElementById("timer").innerText = "20";
+
+            for (let i = 0; i < 20; i += 1) {
+                createPiplup();
+            }
+
+            const spawn = setInterval(() => {
+                if (gameActive) {
+                    createPiplup();
+                } else {
+                    clearInterval(spawn);
+                }
+            }, 500);
+
+            const timer = setInterval(() => {
+                timeLeft -= 1;
+                document.getElementById("timer").innerText = String(timeLeft);
+
+                if (timeLeft <= 0) {
+                    gameActive = false;
+                    clearInterval(timer);
+                    endGame();
+                }
+            }, 1000);
+        }
+
+        function endGame() {
+            document.getElementById("overlay").style.display = "flex";
+            document.getElementById("msg-title").innerText = "게임 종료";
+            document.getElementById("msg-desc").innerText = `찾은 샤이니는 ${shinyCount}마리입니다.`;
+            document.getElementById("action-btn").innerText = "다시 하기";
+            document.getElementById("game-bg").innerHTML = "";
+        }
+    </script>
+</body>
+</html>
