@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>소나 | 동아리 홈페이지 모음</title>
+  <style>
+    :root {
+      --bg: #f5efe6;
+      --panel: rgba(255, 250, 244, 0.84);
+      --text: #2d241f;
+      --muted: #6b5b50;
+      --accent: #c96f3b;
+      --accent-dark: #9f4d22;
+      --line: rgba(45, 36, 31, 0.12);
+      --shadow: 0 18px 40px rgba(74, 45, 25, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Segoe UI", "Apple SD Gothic Neo", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(201, 111, 59, 0.18), transparent 32%),
+        radial-gradient(circle at top right, rgba(238, 190, 138, 0.35), transparent 25%),
+        linear-gradient(180deg, #f7f2ea 0%, #efe3d3 100%);
+    }
+
+    .wrap {
+      width: min(1100px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 32px 0 64px;
+    }
+
+    .hero {
+      padding: 48px 28px;
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      background: var(--panel);
+      backdrop-filter: blur(10px);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto -80px -80px auto;
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      background: rgba(201, 111, 59, 0.14);
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(201, 111, 59, 0.12);
+      color: var(--accent-dark);
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+
+    h1 {
+      margin: 18px 0 14px;
+      font-size: clamp(36px, 7vw, 72px);
+      line-height: 0.98;
+    }
+
+    .hero p {
+      max-width: 700px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.7;
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 16px;
+      margin: 34px 0 16px;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      font-size: 28px;
+    }
+
+    .section-head span {
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      display: block;
+      padding: 22px;
+      border-radius: 22px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.74);
+      box-shadow: 0 14px 28px rgba(80, 53, 37, 0.08);
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 18px 34px rgba(80, 53, 37, 0.12);
+      border-color: rgba(201, 111, 59, 0.35);
+    }
+
+    .card strong {
+      display: block;
+      font-size: 22px;
+      margin-bottom: 8px;
+    }
+
+    .card p {
+      margin: 0 0 16px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .card .link {
+      color: var(--accent-dark);
+      font-weight: 700;
+    }
+
+    .empty {
+      padding: 28px;
+      border-radius: 22px;
+      border: 1px dashed rgba(45, 36, 31, 0.2);
+      background: rgba(255, 255, 255, 0.56);
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .guide {
+      margin-top: 28px;
+      padding: 22px;
+      border-radius: 22px;
+      background: rgba(255, 247, 238, 0.88);
+      border: 1px solid rgba(201, 111, 59, 0.18);
+    }
+
+    .guide h3 {
+      margin: 0 0 12px;
+      font-size: 20px;
+    }
+
+    .guide code {
+      padding: 2px 6px;
+      border-radius: 8px;
+      background: rgba(45, 36, 31, 0.08);
+    }
+
+    .guide ul {
+      margin: 0;
+      padding-left: 20px;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    footer {
+      margin-top: 26px;
+      color: var(--muted);
+      font-size: 14px;
+      text-align: center;
+    }
+
+    @media (max-width: 640px) {
+      .wrap {
+        width: min(100% - 20px, 1100px);
+        padding-top: 20px;
+      }
+
+      .hero {
+        padding: 32px 20px;
+      }
+
+      .hero p {
+        font-size: 16px;
+      }
+
+      .section-head {
+        flex-direction: column;
+        align-items: start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <span class="badge">SONA CLUB</span>
+      <h1>소나</h1>
+      <p>
+        동아리원 각자의 개성이 담긴 홈페이지를 한 곳에서 볼 수 있는 메인 페이지입니다.
+        아래 카드에서 각자의 소개 페이지로 바로 이동할 수 있습니다.
+      </p>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <h2>동아리원 홈페이지</h2>
+        <span id="countLabel">0개의 페이지</span>
+      </div>
+      <div id="memberGrid" class="grid"></div>
+    </section>
+
+    <section class="guide">
+      <h3>추가 방법</h3>
+      <ul>
+        <li>학생별 HTML 파일을 저장소에 업로드합니다. 예: <code>mina.html</code>, <code>jiho.html</code></li>
+        <li><code>members.js</code> 파일에 이름, 설명, 링크를 한 줄씩 추가합니다.</li>
+        <li>GitHub Pages로 배포하면 메인 페이지에서 각 학생 사이트로 이동할 수 있습니다.</li>
+      </ul>
+    </section>
+
+    <footer>소나 동아리 메인 사이트</footer>
+  </div>
+
+  <script src="members.js"></script>
+  <script>
+    const grid = document.getElementById("memberGrid");
+    const countLabel = document.getElementById("countLabel");
+    const members = Array.isArray(window.memberPages) ? window.memberPages : [];
+
+    countLabel.textContent = `${members.length}개의 페이지`;
+
+    if (!members.length) {
+      grid.innerHTML = `
+        <div class="empty">
+          아직 등록된 개인 홈페이지가 없습니다.<br>
+          <code>members.js</code>에 학생 정보를 추가하면 이곳에 자동으로 카드가 나타납니다.
+        </div>
+      `;
+    } else {
+      grid.innerHTML = members.map((member) => `
+        <a class="card" href="${member.href}">
+          <strong>${member.name}</strong>
+          <p>${member.description}</p>
+          <span class="link">홈페이지 보러 가기 →</span>
+        </a>
+      `).join("");
+    }
+  </script>
+</body>
+</html>
