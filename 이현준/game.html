@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>게임 하기 - 이현준</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .game-area {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 30px;
+            margin-bottom: 50px;
+        }
+
+        #timer-display {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #e74c3c;
+            margin-bottom: 15px;
+        }
+
+        .canvas-wrapper {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            background-color: #2c3e50;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        canvas {
+            background-color: #ecf0f1;
+            border-radius: 8px;
+            display: block;
+        }
+
+        #gameCanvas1 {
+            cursor: none;
+        }
+
+        .canvas-label {
+            color: white;
+            font-weight: bold;
+            margin-bottom: -5px;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+
+        #ui-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            border-radius: 15px;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+        }
+
+        #ui-layer h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #f1c40f;
+            text-align: center;
+        }
+
+        #ui-layer p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            text-align: center;
+            line-height: 1.6;
+        }
+
+        #start-btn {
+            padding: 15px 40px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.3s;
+        }
+
+        #start-btn:hover {
+            background-color: #c0392b;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">MyWebsite</div>
+        <nav>
+            <ul>
+                <li><a href="index.html">홈으로 돌아가기</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="game-area">
+            <div id="timer-display">남은 시간: 180초</div>
+            
+            <div class="canvas-wrapper">
+                <div id="ui-layer">
+                    <h2 id="game-message">극한의 멀티태스킹 피하기</h2>
+                    <p>
+                        <strong>[위 화면]</strong> 마우스로 파란 공을 움직이세요.<br>
+                        <strong>[아래 화면]</strong> W, A, S, D 키로 초록 공을 움직이세요.<br>
+                        <span style="color: #e74c3c;">둘 중 하나라도 장애물에 맞으면 즉시 게임 오버!</span>
+                    </p>
+                    <button id="start-btn">게임 시작</button>
+                </div>
+
+                <div class="canvas-label">1P (마우스 조작)</div>
+                <canvas id="gameCanvas1" width="600" height="500"></canvas>
+
+                <div class="canvas-label">2P (W A S D 조작)</div>
+                <canvas id="gameCanvas2" width="600" height="500"></canvas>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const canvas1 = document.getElementById('gameCanvas1');
+        const ctx1 = canvas1.getContext('2d');
+        
+        const canvas2 = document.getElementById('gameCanvas2');
+        const ctx2 = canvas2.getContext('2d');
+
+        const uiLayer = document.getElementById('ui-layer');
+        const startBtn = document.getElementById('start-btn');
+        const gameMessage = document.getElementById('game-message');
+        const timerDisplay = document.getElementById('timer-display');
+
+        let isPlaying = false;
+        let animationId;
+        let timeRemaining = 180;
+        let timerInterval;
+        let frameCount = 0;
+
+        // ★ 공의 처음 Y축 위치를 125에서 250(화면 중앙)으로 수정했습니다 ★
+        const player1 = { x: 300, y: 250, radius: 10, color: '#3498db' };
+        const player2 = { x: 300, y: 250, radius: 10, color: '#2ecc71', speed: 6 };
+
+        let obstacles1 = [];
+        let obstacles2 = [];
+
+        const keys = { w: false, a: false, s: false, d: false };
+
+        canvas1.addEventListener('mousemove', (e) => {
+            if (!isPlaying) return;
+            const rect = canvas1.getBoundingClientRect();
+            player1.x = e.clientX - rect.left;
+            player1.y = e.clientY - rect.top;
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (!isPlaying) return;
+            const key = e.key.toLowerCase();
+            if (key === 'w' || key === 'ㅈ') keys.w = true;
+            if (key === 'a' || key === 'ㅁ') keys.a = true;
+            if (key === 's' || key === 'ㄴ') keys.s = true;
+            if (key === 'd' || key === 'ㅇ') keys.d = true;
+            
+            if(['w', 'a', 's', 'd', 'ㅈ', 'ㅁ', 'ㄴ', 'ㅇ'].includes(key)) {
+                e.preventDefault();
+            }
+        });
+
+        document.addEventListener('keyup', (e) => {
+            const key = e.key.toLowerCase();
+            if (key === 'w' || key === 'ㅈ') keys.w = false;
+            if (key === 'a' || key === 'ㅁ') keys.a = false;
+            if (key === 's' || key === 'ㄴ') keys.s = false;
+            if (key === 'd' || key === 'ㅇ') keys.d = false;
+        });
+
+        function updatePlayer2() {
+            if (keys.w && player2.y - player2.radius > 0) player2.y -= player2.speed;
+            if (keys.s && player2.y + player2.radius < canvas2.height) player2.y += player2.speed;
+            if (keys.a && player2.x - player2.radius > 0) player2.x -= player2.speed;
+            if (keys.d && player2.x + player2.radius < canvas2.width) player2.x += player2.speed;
+        }
+
+        function createObstacle(canvasWidth, canvasHeight, obstaclesArr) {
+            const speedMultiplier = 1 + ((180 - timeRemaining) / 50); 
+            let x, y, dx, dy;
+            const edge = Math.floor(Math.random() * 4); 
+            const baseSpeed = (Math.random() * 2 + 1) * speedMultiplier;
+
+            if (edge === 0) { x = Math.random() * canvasWidth; y = -20; dx = (Math.random() - 0.5) * 2; dy = baseSpeed; }
+            else if (edge === 1) { x = canvasWidth + 20; y = Math.random() * canvasHeight; dx = -baseSpeed; dy = (Math.random() - 0.5) * 2; }
+            else if (edge === 2) { x = Math.random() * canvasWidth; y = canvasHeight + 20; dx = (Math.random() - 0.5) * 2; dy = -baseSpeed; }
+            else { x = -20; y = Math.random() * canvasHeight; dx = baseSpeed; dy = (Math.random() - 0.5) * 2; }
+
+            obstaclesArr.push({
+                x: x, y: y, dx: dx, dy: dy,
+                radius: Math.random() * 8 + 5,
+                color: '#e74c3c'
+            });
+        }
+
+        function checkCollision(player, obs) {
+            const dist = Math.hypot(player.x - obs.x, player.y - obs.y);
+            if (dist - player.radius - obs.radius < 1) {
+                gameOver();
+            }
+        }
+
+        function startGame() {
+            isPlaying = true;
+            obstacles1 = [];
+            obstacles2 = [];
+            timeRemaining = 180;
+            frameCount = 0;
+            
+            // ★ 게임을 다시 시작할 때도 Y축을 250(중앙)으로 초기화합니다 ★
+            player2.x = 300; player2.y = 250; 
+            
+            uiLayer.style.display = 'none';
+            timerDisplay.textContent = `남은 시간: ${timeRemaining}초`;
+            canvas1.style.cursor = 'none';
+
+            timerInterval = setInterval(() => {
+                timeRemaining--;
+                timerDisplay.textContent = `남은 시간: ${timeRemaining}초`;
+                if (timeRemaining <= 0) gameWin();
+            }, 1000);
+
+            gameLoop();
+        }
+
+        function gameOver() {
+            isPlaying = false;
+            clearInterval(timerInterval);
+            cancelAnimationFrame(animationId);
+            uiLayer.style.display = 'flex';
+            gameMessage.innerHTML = '💥 게임 오버! 💥<br><span style="font-size:1.5rem; color:white;">누군가 장애물에 부딪혔습니다!</span>';
+            gameMessage.style.color = '#e74c3c';
+            startBtn.textContent = '다시 도전하기';
+            canvas1.style.cursor = 'default';
+        }
+
+        function gameWin() {
+            isPlaying = false;
+            clearInterval(timerInterval);
+            cancelAnimationFrame(animationId);
+            uiLayer.style.display = 'flex';
+            gameMessage.textContent = '🎉 완벽한 클리어! 3분을 버텼습니다! 🎉';
+            gameMessage.style.color = '#2ecc71';
+            startBtn.textContent = '다시 하기';
+            canvas1.style.cursor = 'default';
+        }
+
+        function updateAndDrawObstacles(ctx, obstaclesArr, playerCanvasWidth, playerCanvasHeight, playerObj) {
+            for (let i = 0; i < obstaclesArr.length; i++) {
+                let obs = obstaclesArr[i];
+                obs.x += obs.dx;
+                obs.y += obs.dy;
+
+                ctx.beginPath();
+                ctx.arc(obs.x, obs.y, obs.radius, 0, Math.PI * 2);
+                ctx.fillStyle = obs.color;
+                ctx.fill();
+                ctx.closePath();
+
+                checkCollision(playerObj, obs);
+            }
+        }
+
+        function gameLoop() {
+            if (!isPlaying) return;
+
+            ctx1.clearRect(0, 0, canvas1.width, canvas1.height);
+            ctx2.clearRect(0, 0, canvas2.width, canvas2.height);
+
+            updatePlayer2();
+
+            ctx1.beginPath();
+            ctx1.arc(player1.x, player1.y, player1.radius, 0, Math.PI * 2);
+            ctx1.fillStyle = player1.color;
+            ctx1.fill();
+            ctx1.closePath();
+
+            ctx2.beginPath();
+            ctx2.arc(player2.x, player2.y, player2.radius, 0, Math.PI * 2);
+            ctx2.fillStyle = player2.color;
+            ctx2.fill();
+            ctx2.closePath();
+
+            let spawnRate = Math.max(8, 25 - Math.floor((180 - timeRemaining) / 10));
+            if (frameCount % spawnRate === 0) {
+                createObstacle(canvas1.width, canvas1.height, obstacles1); 
+                createObstacle(canvas2.width, canvas2.height, obstacles2); 
+            }
+
+            updateAndDrawObstacles(ctx1, obstacles1, canvas1.width, canvas1.height, player1);
+            updateAndDrawObstacles(ctx2, obstacles2, canvas2.width, canvas2.height, player2);
+
+            obstacles1 = obstacles1.filter(obs => obs.x > -50 && obs.x < canvas1.width + 50 && obs.y > -50 && obs.y < canvas1.height + 50);
+            obstacles2 = obstacles2.filter(obs => obs.x > -50 && obs.x < canvas2.width + 50 && obs.y > -50 && obs.y < canvas2.height + 50);
+
+            frameCount++;
+            animationId = requestAnimationFrame(gameLoop);
+        }
+
+        startBtn.addEventListener('click', startGame);
+    </script>
+</body>
+</html>

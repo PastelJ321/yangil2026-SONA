@@ -3,18 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>소나 | 동아리 홈페이지 모음</title>
+  <title>양일고등학교 2026 소나</title>
   <style>
     :root {
-      --bg-top: #f8efe7;
-      --bg-bottom: #efe3d1;
-      --panel: rgba(255, 250, 244, 0.84);
-      --text: #2f241f;
-      --muted: #6b5b50;
-      --accent: #c96f3b;
-      --accent-strong: #8e431d;
-      --line: rgba(47, 36, 31, 0.12);
-      --shadow: 0 20px 40px rgba(86, 55, 31, 0.12);
+      --bg: #eef3f8;
+      --bg-soft: #f7fafd;
+      --panel: rgba(255, 255, 255, 0.92);
+      --text: #1d2733;
+      --muted: #6e7c89;
+      --line: #d8e2ec;
+      --accent: #4f7ea8;
+      --accent-soft: #eaf2f9;
+      --radius-xl: 28px;
+      --radius-lg: 18px;
     }
 
     * {
@@ -24,201 +25,131 @@
     body {
       margin: 0;
       min-height: 100vh;
-      font-family: "Segoe UI", "Apple SD Gothic Neo", sans-serif;
+      font-family: "SUIT", "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
       color: var(--text);
-      background:
-        radial-gradient(circle at top left, rgba(201, 111, 59, 0.18), transparent 30%),
-        radial-gradient(circle at top right, rgba(240, 190, 141, 0.36), transparent 24%),
-        linear-gradient(180deg, var(--bg-top) 0%, var(--bg-bottom) 100%);
+      background: linear-gradient(180deg, var(--bg-soft) 0%, var(--bg) 100%);
     }
 
     .wrap {
-      width: min(1120px, calc(100% - 32px));
+      width: min(1040px, calc(100% - 32px));
       margin: 0 auto;
-      padding: 32px 0 64px;
-    }
-
-    .hero,
-    .guide {
-      border: 1px solid var(--line);
-      border-radius: 28px;
-      background: var(--panel);
-      backdrop-filter: blur(10px);
-      box-shadow: var(--shadow);
+      padding: 28px 0 48px;
     }
 
     .hero {
-      position: relative;
-      overflow: hidden;
-      padding: 44px 28px;
+      padding: 40px 32px 30px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      background: var(--panel);
     }
 
-    .hero::after {
-      content: "";
-      position: absolute;
-      right: -70px;
-      bottom: -80px;
-      width: 210px;
-      height: 210px;
-      border-radius: 50%;
-      background: rgba(201, 111, 59, 0.14);
-    }
-
-    .badge {
-      display: inline-block;
-      padding: 8px 14px;
-      border-radius: 999px;
-      background: rgba(201, 111, 59, 0.12);
-      color: var(--accent-strong);
-      font-size: 14px;
-      font-weight: 700;
-      letter-spacing: 0.05em;
+    .eyebrow {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
     }
 
     h1 {
-      margin: 18px 0 12px;
-      font-size: clamp(36px, 7vw, 72px);
-      line-height: 1;
-    }
-
-    .hero p {
-      max-width: 720px;
-      margin: 0;
-      color: var(--muted);
-      font-size: 18px;
-      line-height: 1.7;
+      margin: 10px 0 0;
+      font-size: clamp(34px, 7vw, 64px);
+      line-height: 1.04;
+      letter-spacing: -0.05em;
+      font-weight: 800;
     }
 
     .section-head {
       display: flex;
+      align-items: center;
       justify-content: space-between;
-      align-items: end;
       gap: 16px;
-      margin: 34px 0 16px;
+      margin: 24px 0 14px;
     }
 
     .section-head h2 {
       margin: 0;
-      font-size: 28px;
+      font-size: 19px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
     }
 
     .section-head span {
       color: var(--muted);
-      font-size: 15px;
+      font-size: 14px;
     }
 
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 18px;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
     }
 
     .card {
-      display: block;
-      padding: 22px;
-      border-radius: 22px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 136px;
+      padding: 18px;
       border: 1px solid var(--line);
-      background: rgba(255, 255, 255, 0.76);
-      box-shadow: 0 14px 28px rgba(80, 53, 37, 0.08);
-      text-decoration: none;
+      border-radius: var(--radius-lg);
+      background: var(--panel);
       color: inherit;
-      transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+      text-decoration: none;
+      transition: border-color 0.18s ease, background-color 0.18s ease, transform 0.18s ease;
     }
 
     .card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 18px 34px rgba(80, 53, 37, 0.12);
-      border-color: rgba(201, 111, 59, 0.35);
+      transform: translateY(-2px);
+      border-color: #bfd0df;
+      background: #fcfeff;
     }
 
     .card strong {
       display: block;
-      margin-bottom: 8px;
-      font-size: 22px;
+      font-size: 20px;
+      line-height: 1.2;
+      letter-spacing: -0.03em;
     }
 
-    .card p {
-      margin: 0 0 16px;
+    .card .meta {
+      margin-top: 10px;
       color: var(--muted);
-      line-height: 1.6;
-      min-height: 48px;
-    }
-
-    .path {
-      display: inline-block;
-      margin-bottom: 8px;
-      color: var(--muted);
-      font-size: 13px;
+      font-size: 12px;
+      line-height: 1.5;
       word-break: break-all;
     }
 
-    .link {
-      color: var(--accent-strong);
+    .card .action {
+      margin-top: 16px;
+      color: var(--accent);
+      font-size: 14px;
       font-weight: 700;
     }
 
     .empty {
-      padding: 28px;
-      border-radius: 22px;
-      border: 1px dashed rgba(47, 36, 31, 0.18);
-      background: rgba(255, 255, 255, 0.56);
-      color: var(--muted);
-      line-height: 1.7;
-    }
-
-    .guide {
-      margin-top: 28px;
       padding: 24px;
-    }
-
-    .guide h3 {
-      margin: 0 0 12px;
-      font-size: 20px;
-    }
-
-    .guide p {
-      margin: 0 0 12px;
+      border: 1px dashed var(--line);
+      border-radius: var(--radius-lg);
+      background: rgba(255, 255, 255, 0.72);
       color: var(--muted);
-      line-height: 1.7;
-    }
-
-    .guide code {
-      padding: 2px 6px;
-      border-radius: 8px;
-      background: rgba(47, 36, 31, 0.08);
-    }
-
-    .guide ul {
-      margin: 0;
-      padding-left: 20px;
-      color: var(--muted);
-      line-height: 1.8;
-    }
-
-    footer {
-      margin-top: 26px;
-      color: var(--muted);
-      font-size: 14px;
       text-align: center;
     }
 
     @media (max-width: 640px) {
       .wrap {
-        width: min(100% - 20px, 1120px);
+        width: min(100% - 20px, 1040px);
         padding-top: 20px;
       }
 
       .hero {
-        padding: 32px 20px;
-      }
-
-      .hero p {
-        font-size: 16px;
+        padding: 32px 22px 24px;
       }
 
       .section-head {
         flex-direction: column;
-        align-items: start;
+        align-items: flex-start;
       }
     }
   </style>
@@ -226,37 +157,17 @@
 <body>
   <div class="wrap">
     <section class="hero">
-      <span class="badge">SONA CLUB</span>
-      <h1>소나</h1>
-      <p>
-        동아리원 각자의 소개 페이지를 한곳에서 모아 보는 상위 사이트입니다.
-        GitHub Pages에 올리면 아래 카드에서 각 학생의 홈페이지로 바로 이동할 수 있습니다.
-      </p>
+      <p class="eyebrow">Yangil High School</p>
+      <h1>2026 소나</h1>
     </section>
 
     <section>
       <div class="section-head">
-        <h2>동아리원 홈페이지</h2>
-        <span id="countLabel">0개의 페이지</span>
+        <h2>학생 홈페이지</h2>
+        <span id="countLabel">0</span>
       </div>
       <div id="memberGrid" class="grid"></div>
     </section>
-
-    <section class="guide">
-      <h3>현재 구조에서 GitHub에 올리는 방법</h3>
-      <p>
-        메인 페이지는 저장소 맨 위의 <code>index.html</code>이고, 학생 홈페이지는 각자 폴더 안에 있습니다.
-        그래서 메인 페이지에서는 실제 폴더 경로 그대로 링크해야 합니다.
-      </p>
-      <ul>
-        <li>저장소 루트에 있는 <code>index.html</code>을 GitHub Pages의 시작 페이지로 사용합니다.</li>
-        <li>학생 페이지는 예를 들어 <code>10609박수현/index.html</code> 같은 실제 경로로 연결합니다.</li>
-        <li>새 학생 파일을 추가할 때는 <code>members.js</code>에 이름, 설명, 경로만 추가하면 됩니다.</li>
-        <li>GitHub Pages는 경로의 대소문자를 구분하므로 파일명과 확장자를 실제와 똑같이 써야 합니다.</li>
-      </ul>
-    </section>
-
-    <footer>소나 동아리 메인 사이트</footer>
   </div>
 
   <script src="members.js"></script>
@@ -265,22 +176,18 @@
     const countLabel = document.getElementById("countLabel");
     const members = Array.isArray(window.memberPages) ? window.memberPages : [];
 
-    countLabel.textContent = `${members.length}개의 페이지`;
+    countLabel.textContent = String(members.length);
 
     if (!members.length) {
-      grid.innerHTML = `
-        <div class="empty">
-          아직 등록된 개인 홈페이지가 없습니다.<br>
-          <code>members.js</code>에 학생 정보와 파일 경로를 추가하면 자동으로 카드가 나타납니다.
-        </div>
-      `;
+      grid.innerHTML = '<div class="empty">등록된 페이지가 없습니다.</div>';
     } else {
       grid.innerHTML = members.map((member) => `
         <a class="card" href="${member.href}">
-          <span class="path">${member.href}</span>
-          <strong>${member.name}</strong>
-          <p>${member.description || "개인 홈페이지로 이동합니다."}</p>
-          <span class="link">홈페이지 열기 →</span>
+          <div>
+            <strong>${member.name}</strong>
+            <div class="meta">${member.href}</div>
+          </div>
+          <div class="action">홈페이지 열기</div>
         </a>
       `).join("");
     }

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>곽호윤 | Personal Page</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;500;700&display=swap');
+
+        /* 초기화 */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Noto Sans KR', sans-serif; 
+            background-color: #0f172a; 
+            color: #f8fafc; 
+            line-height: 1.7;
+            word-break: keep-all; /* 한글 줄바꿈을 더 자연스럽게 */
+        }
+
+        /* 히어로 섹션 */
+        .hero {
+            height: 60vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
+            text-align: center;
+            border-bottom: 1px solid #334155;
+            padding: 20px;
+        }
+        .hero h1 { font-size: 3.5rem; letter-spacing: -1px; margin-bottom: 10px; color: #38bdf8; }
+        .hero p { font-size: 1.2rem; color: #94a3b8; font-weight: 300; }
+
+        .main-content { max-width: 900px; margin: -50px auto 50px; padding: 0 20px; }
+
+        /* 섹션 공통 스타일 */
+        section {
+            background: #1e293b;
+            padding: 40px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+        }
+        h2 { font-size: 1.5rem; margin-bottom: 25px; color: #38bdf8; display: flex; align-items: center; }
+        h2::before { content: ""; width: 4px; height: 20px; background: #38bdf8; margin-right: 12px; border-radius: 2px; }
+
+        /* 관심사 그리드 */
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .item { background: #334155; padding: 20px; border-radius: 12px; transition: all 0.3s ease; }
+        .item:hover { transform: translateY(-5px); background: #3d4e63; }
+        .item h3 { font-size: 1.1rem; margin-bottom: 8px; color: #f1f5f9; }
+        .item p { font-size: 0.95rem; color: #cbd5e1; }
+
+        /* 비전 섹션 */
+        .vision-text { font-style: italic; font-size: 1.1rem; text-align: center; color: #e2e8f0; line-height: 2; }
+
+        /* 버튼 스타일 */
+        .btn-contact {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 10px 25px;
+            background: transparent;
+            border: 2px solid #38bdf8;
+            color: #38bdf8;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .btn-contact:hover {
+            background: #38bdf8;
+            color: #0f172a;
+        }
+
+        /* 하단 정보 */
+        footer { text-align: center; padding-bottom: 50px; color: #64748b; font-size: 0.85rem; }
+
+        @media (max-width: 600px) {
+            .grid { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 2.5rem; }
+            .main-content { margin-top: -30px; }
+            section { padding: 30px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="hero">
+        <h1>곽호윤</h1>
+        <p>행복을 위해 사는 사람</p>
+    </div>
+
+    <div class="main-content">
+        <section>
+            <h2>My Interests</h2>
+            <div class="grid">
+                <div class="item">
+                    <h3>🚀 기술과 혁신</h3>
+                    <p>새로운 기술이 세상을 어떻게 바꾸는지 관찰하고 직접 경험하는 것을 좋아합니다.</p>
+                </div>
+                <div class="item">
+                    <h3>🎨 창의적 사고</h3>
+                    <p>정해진 답에서 벗어나 나만의 독특한 관점으로 문제를 바라보는 것을 좋아합니다.</p>
+                </div>
+                <div class="item">
+                    <h3>📚 끊임없는 배움</h3>
+                    <p>나와 다른 생각을 가진 사람들과의 토론을 통해 사고의 지평을 넓히는 것을 즐깁니다.</p>
+                </div>
+                <div class="item">
+                    <h3>🤝 소통과 연결</h3>
+                    <p>상대의 의견을 편견 없이 수용하고, 그 바탕 위에서 최선의 결론을 도출합니다.</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Vision</h2>
+            <div class="vision-text">
+                "단순히 결과에 머무르지 않고, 과정 속에서 의미를 찾으며<br> 
+                주변 사람들에게 긍정적인 영향을 주는 사람이 되고 싶습니다."
+            </div>
+        </section>
+
+        <section style="text-align: center;">
+            <p style="color: #94a3b8; margin-bottom: 15px;">더 궁금한 점이 있다면?</p>
+            <a href="mailto:contact@hkwak.com" class="btn-contact">Send Message</a>
+        </section>
+    </div>
+
+    <footer>
+        <p>© 2026 곽호윤. Designed with Passion.</p>
+    </footer>
+
+</body>
+</html>
